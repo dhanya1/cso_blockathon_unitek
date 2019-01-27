@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+     <style>
+body  {
+    background-image: url("/static/Blockchain.jpg");
+    background-color: #cccccc;
+    background-size: 100%;
+}
+
+</style>
+</head>
+<body>
+<center>
+<h5>File {{ inputfilename }} uploaded successfully.</h5> <br>
+     <form id="verify-form" action="{{ url_for('verify') }}" method="POST" enctype="multipart/form-data">
+         HASH Value: <input type="text" name="hvalue"  size= '40' value= {{ hash_value }}><br><br><br>
+         <h4>Upload a new_file/old_file:</h4>  <input id="file-picker" type="file" name="file"  multiple><br>
+            <div id="msg"></div><br>
+            <input type="submit" value="Verify!" id="verify-button">
+        </form>
+</center>
+</body>
+<script>
+    $("#file-picker").change(function(){
+        var input = document.getElementById('file-picker');
+        for (var i=0; i<input.files.length; i++)
+        {
+           var ext= input.files[i].name.substring(input.files[i].name.lastIndexOf('.')+1).toLowerCase()
+            if ((ext == 'txt') || (ext == 'csv'))
+            {
+                $("#msg").text("Files are supported")
+            }
+            else
+            {
+                $("#msg").text("Files are NOT supported")
+                document.getElementById("file-picker").value ="";
+            }
+        }
+    } );
+</script>
+</html>
